@@ -57,7 +57,7 @@ public class Servidor extends Thread {
 			System.out.println(" **SERVIDOR CERRADO**");
 			System.exit(0);
 		} catch (InterruptedException e) {
-			
+			System.out.println(" !ERROR: Servidor -> InterruptedException\n");
 		}
 	}
 
