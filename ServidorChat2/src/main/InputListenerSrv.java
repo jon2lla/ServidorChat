@@ -3,8 +3,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -34,14 +32,12 @@ public class InputListenerSrv extends Thread {
 			try {
 				datos = (Datos) oentrada.readObject();
 				if (!datos.getContenido().equals("*")) {
-				textArea.append(datos.getContenido());
-				GestorConexiones.getInstance().mensajeDeDifusion(datos.getContenido());
-
+					textArea.append(datos.getContenido());
+					
+					GestorConexiones.getInstance().mensajeDeDifusion(datos.getContenido());
 				}
 				else
-				{
 					GestorConexiones.getInstance().cerrarConexion(idConexion);									
-				}
 			} catch (ClassNotFoundException e) {
 				System.out.println(" !ERROR: Input Listener Servidor -> ClassNotFoundException");
 			} catch (IOException e) {
@@ -51,6 +47,10 @@ public class InputListenerSrv extends Thread {
 		}
 		this.textoF.setText("Conexiones actuales: " + GestorConexiones.getInstance().getNumUsuarios());			
 		System.out.println(" #CONEXION " + idConexion + " -> Desconectado\n");
+		if (GestorConexiones.getInstance().getNumUsuarios() < Servidor.MAX_CONEXIONES)
+			textArea.append(" Esperando conexiones... \n");
+		else
+			textArea.append(" Servidor lleno\n");
 	}
 
 	public String getIdConexion() {

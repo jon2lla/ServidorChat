@@ -21,8 +21,6 @@ public class InputListenerClt extends Thread {
 	}
 
 	public void run() {
-
-
 		Datos datos = new Datos();
 		datos.setContenido("");
 		
@@ -32,33 +30,13 @@ public class InputListenerClt extends Thread {
 				if(!datos.getContenido().equals("*"))
 					textArea.append(datos.getContenido());
 				else
-					textArea.append("Servidor desconectado");
-
+					textArea.append(" #SERVIDOR DESCONECTADO\n");			
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println(" !ERROR: Input Listener Cliente -> ClassNotFoundException\n");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println(" !ERROR: Input Listener Cliente -> IOException");
 			}
 		}
-		
-		System.out.println("Termino recibir cliente");
 		botonEnviar.setEnabled(false);
-	}
-
-	public void cerrarConexion() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void enviarMensaje(String mensaje) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public String getIdConexion() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

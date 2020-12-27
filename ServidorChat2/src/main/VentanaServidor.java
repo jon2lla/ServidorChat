@@ -13,9 +13,7 @@ import javax.swing.JTextField;
 
 
 public class VentanaServidor extends JFrame implements ActionListener {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	static JTextField mensaje = new JTextField();
@@ -26,9 +24,6 @@ public class VentanaServidor extends JFrame implements ActionListener {
 	JButton botonSalir = new JButton("Salir");
 	Servidor s = null;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -41,11 +36,8 @@ public class VentanaServidor extends JFrame implements ActionListener {
 				}
 			}
 		});
-	}
+	} 
 
-	/**
-	 * Create the frame.
-	 */
 	public VentanaServidor() {
 		super(" VENTANA SERVIDOR ");
 		setResizable(false);
@@ -60,7 +52,6 @@ public class VentanaServidor extends JFrame implements ActionListener {
 		scrollpane1 = new JScrollPane(textarea1);
 		scrollpane1.setBounds(10, 50, 400, 300);
 		getContentPane().add(scrollpane1);
-		textarea1.setText("Esperando conexiones... \n");
 		botonSalir.setBounds(206, 370, 100, 30);
 		getContentPane().add(botonSalir);
 
@@ -71,13 +62,11 @@ public class VentanaServidor extends JFrame implements ActionListener {
 
 		s = new Servidor(textarea1,mensaje);
 		s.start();
-		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		if (e.getSource() == botonSalir) { // SE PULSA BOTON SALIR
+		if (e.getSource() == botonSalir) { 
 			s.desconectar();
 		}
 	}

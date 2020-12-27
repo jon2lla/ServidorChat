@@ -18,9 +18,7 @@ public class Cliente {
 	ObjectOutputStream fsalida = null;
 	JButton botonEnviar = null;
 
-	public Cliente() {
-
-	}
+	public Cliente() {}
 
 	public Cliente(Socket socket, JTextArea textArea, JTextField texto, JButton botonEnviar) throws IOException {
 		this.socket = socket;
@@ -34,6 +32,7 @@ public class Cliente {
 
 		InputListenerClt hilo = new InputListenerClt(this.textArea, this.texto, fentrada, this.botonEnviar);
 		hilo.start();
+		System.out.println("\n #CLIENTE CONECTADO\n");
 	}
 
 	public void enviarMensaje(String mensaje) {
@@ -43,8 +42,7 @@ public class Cliente {
 			if (botonEnviar.isEnabled())
 				fsalida.writeObject(datos);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(" !CONEXION PERDIDA\n");
 		}
 	}
 

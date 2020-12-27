@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 public class Servidor extends Thread {
 
 	int PUERTO = 44444;
-	int MAXIMO_CONEXIONES = 3;
+	protected static int MAX_CONEXIONES = 3;
 	JTextArea textArea = null;
 	JTextField texto = null;
 	boolean continuar = true;
@@ -29,13 +29,19 @@ public class Servidor extends Thread {
 		try {
 			servidor = new ServerSocket(PUERTO);
 
-			System.out.println("Servidor iniciado...");
+			System.out.println("\n **SERVIDOR INICIADO**\n");
 			Socket socket = new Socket();
 			
 			texto.setText("Conexiones actuales: " + GestorConexiones.getInstance().getNumUsuarios());
+
 			while (continuar) {
+				Thread.sleep(200);
+				if (GestorConexiones.getInstance().getNumUsuarios() < Servidor.MAX_CONEXIONES)
+					textArea.append(" Esperando conexiones... \n");
+				else
+					textArea.append(" Servidor lleno\n");
 				socket = servidor.accept();
-				if (GestorConexiones.getInstance().getNumUsuarios() < MAXIMO_CONEXIONES) {
+				if (GestorConexiones.getInstance().getNumUsuarios() < MAX_CONEXIONES) {
 					InputListenerSrv hilo = new InputListenerSrv(socket, textArea, texto);
 					hilo.start();
 					GestorConexiones.getInstance().registrarConexion(hilo);
@@ -44,22 +50,15 @@ public class Servidor extends Thread {
 				}
 				else
 					socket.close();
-				
-			
-				
 			}
-
-			socket.close();
-			
-			System.out.println("Servidor terminado");
-
+			socket.close();			
+			System.out.println(" **SERVIDOR TERMINADO**");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Servidor cerrado");
+			System.out.println(" **SERVIDOR CERRADO**");
 			System.exit(0);
+		} catch (InterruptedException e) {
+			
 		}
-		
-
 	}
 
 	public void desconectar() {
@@ -69,9 +68,6 @@ public class Servidor extends Thread {
 			servidor.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		
-		
+		}	
 	}
-
 }
