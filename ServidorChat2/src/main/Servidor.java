@@ -11,7 +11,6 @@ import javax.swing.JTextField;
 
 public class Servidor extends Thread {
 
-	ArrayList<ObjectOutputStream> lista;
 	int PUERTO = 44444;
 	int MAXIMO_CONEXIONES = 3;
 	JTextArea textArea = null;
@@ -20,7 +19,6 @@ public class Servidor extends Thread {
 	ServerSocket servidor = null;
 
 	public Servidor(JTextArea textArea, JTextField texto) {
-		lista = new ArrayList<ObjectOutputStream>();
 		this.texto = texto;
 		this.textArea = textArea;
 		texto.setText("0");
@@ -34,16 +32,15 @@ public class Servidor extends Thread {
 			System.out.println("Servidor iniciado...");
 			Socket socket = new Socket();
 			
-			texto.setText("Conexiones actuales: "+ lista.size());
+			texto.setText("Conexiones actuales: " + GestorConexiones.getInstance().getNumUsuarios());
 			while (continuar) {
 				socket = servidor.accept();
-				if (lista.size() < MAXIMO_CONEXIONES) {
-					ObjectOutputStream osalida = new ObjectOutputStream(socket.getOutputStream());
-					lista.add(osalida);
-					ObjectInputStream oentrada = new ObjectInputStream(socket.getInputStream());
-					texto.setText("Conexiones actuales: "+ lista.size());
-					HiloRecibir hilo = new HiloRecibir(textArea, texto, osalida, oentrada, lista);
+				if (GestorConexiones.getInstance().getNumUsuarios() < MAXIMO_CONEXIONES) {
+					InputListenerSrv hilo = new InputListenerSrv(socket, textArea, texto);
 					hilo.start();
+					GestorConexiones.getInstance().registrarConexion(hilo);
+					System.out.println(" #CONEXION " + hilo.getIdConexion() + " -> Conectado\n");
+					texto.setText("Conexiones actuales: " + GestorConexiones.getInstance().getNumUsuarios());
 				}
 				else
 					socket.close();
@@ -68,13 +65,7 @@ public class Servidor extends Thread {
 	public void desconectar() {
 		continuar = false;
 		try {
-			for(int i = 0;i<lista.size();i++)
-			{
-				ObjectOutputStream os = lista.get(i);
-				Datos datos =new Datos();
-				datos.setContenido("*");
-				os.writeObject(datos);
-			}
+			GestorConexiones.getInstance().mensajeDeDifusion("*");			
 			servidor.close();
 		} catch (IOException e) {
 			e.printStackTrace();

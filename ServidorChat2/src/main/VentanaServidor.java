@@ -48,6 +48,8 @@ public class VentanaServidor extends JFrame implements ActionListener {
 	 */
 	public VentanaServidor() {
 		super(" VENTANA SERVIDOR ");
+		setResizable(false);
+		setAlwaysOnTop(true);
 		getContentPane().setLayout(null);
 
 		mensaje.setBounds(10, 10, 400, 30);

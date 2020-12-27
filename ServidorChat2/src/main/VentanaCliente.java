@@ -21,7 +21,9 @@ public class VentanaCliente extends JFrame implements ActionListener {
 
 	// constructor
 	public VentanaCliente(Socket s, String nombre) throws IOException {
-		super(" CONEXI�N DEL CLIENTE CHAT: " + nombre);
+		super(" CONEXION DEL CLIENTE CHAT: " + nombre);
+		setResizable(false);
+		setAlwaysOnTop(true);
 		getContentPane().setLayout(null);
 
 		mensaje.setBounds(10, 10, 400, 30);

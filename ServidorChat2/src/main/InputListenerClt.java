@@ -6,14 +6,14 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class HiloRecibirC extends Thread {
+public class InputListenerClt extends Thread {
 
 	JTextArea textArea = null;
 	JTextField texto = null;
 	ObjectInputStream oentrada = null;
 	JButton botonEnviar = null;
 
-	public HiloRecibirC(JTextArea textArea, JTextField texto, ObjectInputStream oentrada, JButton botonEnviar) {
+	public InputListenerClt(JTextArea textArea, JTextField texto, ObjectInputStream oentrada, JButton botonEnviar) {
 		this.textArea = textArea;
 		this.texto = texto;
 		this.oentrada = oentrada;
@@ -47,4 +47,18 @@ public class HiloRecibirC extends Thread {
 		botonEnviar.setEnabled(false);
 	}
 
+	public void cerrarConexion() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void enviarMensaje(String mensaje) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getIdConexion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -32,7 +32,7 @@ public class Cliente {
 		fsalida = new ObjectOutputStream(socket.getOutputStream());
 		fentrada = new ObjectInputStream(socket.getInputStream());
 
-		HiloRecibirC hilo = new HiloRecibirC(this.textArea, this.texto, fentrada, this.botonEnviar);
+		InputListenerClt hilo = new InputListenerClt(this.textArea, this.texto, fentrada, this.botonEnviar);
 		hilo.start();
 	}
 

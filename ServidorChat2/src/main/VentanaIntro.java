@@ -45,6 +45,8 @@ public class VentanaIntro extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaIntro() {
+		setResizable(false);
+		setAlwaysOnTop(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 272, 187);
 		contentPane = new JPanel();
